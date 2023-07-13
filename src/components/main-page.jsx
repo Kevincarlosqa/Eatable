@@ -9,7 +9,7 @@ const credentials = {
 
 const MainPage = () => {
   login(credentials).then((data) => console.log(data));
-  return <h1>MainPage</h1>;
+  return <h1 className="h1">Products Dashboard</h1>;
 };
 
 export default MainPage;
