@@ -1,6 +1,7 @@
 :root {
   font-family: "Source Sans Pro", system-ui, Avenir, Helvetica, Arial,
     sans-serif;
+  --orange: #fa4a0c;
 }
 /* Box sizing rules */
 *,
@@ -85,6 +86,10 @@ h1 {
   font-weight: 600;
   line-height: normal;
   text-align: center;
+}
+
+body {
+  background-color: #f6f6f9;
 }
 /* line-height: 1.5;
   font-weight: 400;

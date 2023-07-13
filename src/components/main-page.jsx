@@ -1,15 +1,36 @@
 import React from "react";
 import { tokenKey, BASE_AUTH_URL } from "../config";
-import { login } from "../services/authService";
+import DishCard from "./dish-card";
+import styled from "@emotion/styled";
 
-const credentials = {
-  email: "testino@mail.com",
-  password: "letmein",
-};
+const DishesContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 332px;
+  gap: 20px;
+`;
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 3rem auto;
+`;
 const MainPage = () => {
-  login(credentials).then((data) => console.log(data));
-  return <h1 className="h1">Products Dashboard</h1>;
+  const dishes = JSON.parse(localStorage.getItem("dishes")) || [];
+  return (
+    <>
+      <h1 className="h1">Products Dashboard</h1>
+      <Container>
+        <DishesContainer>
+          {dishes.map((dish, index) => (
+            <DishCard key={index} dish={dish}>
+              {console.log(dish)}
+            </DishCard>
+          ))}
+        </DishesContainer>
+      </Container>
+    </>
+  );
 };
 
 export default MainPage;
