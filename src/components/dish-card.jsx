@@ -49,7 +49,7 @@ const ImgDish = styled.div`
   box-shadow: 0px 15px 30px 0px rgba(57, 57, 57, 0.5);
 `;
 
-const DishCard = ({ dish }) => {
+const DishCard = ({ dish, setDel }) => {
   const navigate = useNavigate();
   function handleClick(id) {
     navigate(`/dish/${id}`);
@@ -70,7 +70,13 @@ const DishCard = ({ dish }) => {
         </p>
         <div>
           <RiEditBoxFill size="16px" onClick={() => console.log("edit")} />
-          <RiDeleteBinFill size="16px" onClick={() => console.log("delete")} />
+          <RiDeleteBinFill
+            size="16px"
+            onClick={() => {
+              setDel(true);
+              localStorage.setItem("delete", dish.id);
+            }}
+          />
         </div>
       </BgCard>
     </CardContainer>
