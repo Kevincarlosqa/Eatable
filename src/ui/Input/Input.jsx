@@ -28,11 +28,11 @@ const StyledLabel = styled.label`
 //   text-transform: uppercase;
 // `;
 
-function Input({ label, ...rest }) {
+function Input({ label, type, ...rest }) {
   return (
     <Container>
       {label && <StyledLabel>{label}</StyledLabel>}
-      <StyledInput {...rest} />
+      <StyledInput type={type} {...rest} />
     </Container>
   );
 }
