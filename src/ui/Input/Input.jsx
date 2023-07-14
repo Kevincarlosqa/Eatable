@@ -1,8 +1,4 @@
 import styled from "@emotion/styled";
-import { colors } from "../../styles/colors";
-import { typography } from "../../styles/typography";
-// import { Text } from "./Typography";
-
 const Container = styled.div`
   width: 100%;
 `;
@@ -11,13 +7,20 @@ const StyledInput = styled.input`
   padding: 2px 2px;
   border: none;
   background: transparent;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #333;
   width: 100%;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const StyledLabel = styled.label`
-  ${typography.text.xs};
-  text-transform: uppercase;
+  text-transform: capitalize;
+  color: #b8b8bb;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 `;
 
 // Using styled components composition:

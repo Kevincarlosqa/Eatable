@@ -69,7 +69,10 @@ const DishCard = ({ dish, setDel }) => {
             : dish.price / 100}
         </p>
         <div>
-          <RiEditBoxFill size="16px" onClick={() => console.log("edit")} />
+          <RiEditBoxFill
+            size="16px"
+            onClick={() => navigate(`/edit/${dish.id}`)}
+          />
           <RiDeleteBinFill
             size="16px"
             onClick={() => {

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import MainPage from "./components/main-page";
 import DishDetails from "./components/dish-details";
+import EditPage from "./components/edit-page";
+import CreatePage from "./components/create-page";
 import { login } from "./services/authService";
 import ApiFetch from "./services/apiFetch";
 import { Routes } from "react-router-dom";
@@ -32,6 +34,8 @@ function App() {
         }
       />
       <Route path="/dish/:dish_id" element={<DishDetails />} />
+      <Route path="/edit/:dish_id" element={<EditPage />} />
+      <Route path="/create" element={<CreatePage />} />
     </Routes>
   );
 }

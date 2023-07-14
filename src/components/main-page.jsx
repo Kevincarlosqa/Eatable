@@ -3,6 +3,7 @@ import { tokenKey, BASE_AUTH_URL } from "../config";
 import DishCard from "./dish-card";
 import styled from "@emotion/styled";
 import Button from "../ui/Button/Button";
+import { useNavigate } from "react-router-dom";
 
 const DishesContainer = styled.div`
   display: grid;
@@ -76,6 +77,10 @@ const DeleteCard = styled.div`
 const MainPage = () => {
   const dishes = JSON.parse(localStorage.getItem("dishes")) || [];
   const [del, setDel] = useState(false);
+  const navigate = useNavigate();
+  function handleCreate() {
+    navigate("/create");
+  }
   useEffect(() => {
     console.log(del);
   }, [del]);
@@ -101,7 +106,7 @@ const MainPage = () => {
           ))}
         </DishesContainer>
       </Container>
-      <Button>Create Product</Button>
+      <Button onCreate={handleCreate}>Create Product</Button>
     </>
   );
 };

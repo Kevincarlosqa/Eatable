@@ -28,10 +28,10 @@ const StyledButton = styled.button`
   line-height: normal;
 `;
 
-const Button = ({ children, onBack }) => {
+const Button = ({ children, onBack, onCreate }) => {
   return (
     <Container>
-      <StyledButton onClick={onBack}>{children}</StyledButton>
+      <StyledButton onClick={onBack || onCreate}>{children}</StyledButton>
     </Container>
   );
 };
