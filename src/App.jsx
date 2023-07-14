@@ -1,7 +1,10 @@
 import { useState } from "react";
 import MainPage from "./components/main-page";
+import DishDetails from "./components/dish-details";
 import { login } from "./services/authService";
 import ApiFetch from "./services/apiFetch";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
 // import "./App.css";
 
 const credentials = {
@@ -18,10 +21,18 @@ function App() {
     )
     .catch((error) => console.log(error));
   return (
-    <div className="">
+    <Routes>
       {/* <h1>Products Dashhboard</h1> */}
-      <MainPage />
-    </div>
+      <Route
+        path="/"
+        element={
+          <div className="contain">
+            <MainPage />
+          </div>
+        }
+      />
+      <Route path="/dish/:dish_id" element={<DishDetails />} />
+    </Routes>
   );
 }
 

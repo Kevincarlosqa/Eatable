@@ -1,120 +1,39 @@
-import PropTypes from "prop-types";
+import React from "react";
 import styled from "@emotion/styled";
 
-
-import { colors } from "../../styles/colors";
-import { typography } from "../../styles/typography";
-
-function typeStyles(type) {
-  switch (type) {
-    case "primary":
-      return `
-        background-color: ${colors.primary};
-        color: ${colors.white};
-        &:hover {
-          background-color: ${colors.pink[700]};
-        }
-        &:active {
-          background-color: ${colors.pink[800]};
-        }
-        &:focus {
-          outline: 2px solid ${colors.pink[800]};
-        }
-      `;
-
-    case "secondary":
-      return `
-        background-color: ${colors.stone[500]};
-        color: ${colors.white};
-        &:hover {
-          background-color: ${colors.stone[600]};
-        }
-        &:active {
-          background-color: ${colors.stone[700]};
-        }
-        &:focus {
-          outline: 2px solid ${colors.stone[700]};
-        }
-      `;
-
-    default:
-      break;
-  }
-}
-
-function sizeStyles(size, rounded) {
-  switch (size) {
-    case "sm":
-      return `
-        padding: 0.5rem ${rounded ? "" : "0.75rem"};
-        ${typography.text.sm}
-        line-height: 1em;
-      `;
-
-    case "lg":
-      return `
-          padding: 0.875rem ${rounded ? "" : "1.5rem"};
-          ${typography.text.lg}
-          line-height: 1em;
-        `;
-
-    default:
-      break;
-  }
-}
-
-const StyledButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: ${colors.gray[200]};
-  color: ${colors.gray[900]};
-  border: none;
-  ${typography.text.md}
-  line-height: 1em;
-  cursor: pointer;
-
-  width: ${({ isFullWidth }) => (isFullWidth ? "100%" : "fit-content")};
-  padding: 0.75rem ${({ rounded }) => (rounded ? "0.75rem" : "1rem")};
-  border-radius: ${({ rounded }) => (rounded ? "999px" : "0.5rem")};
-
-  &:hover {
-    background-color: ${colors.gray[300]};
-  }
-  &:active {
-    background-color: ${colors.gray[400]};
-  }
-  &:focus {
-    outline: 2px solid ${colors.gray[400]};
-  }
-  &:disabled {
-    opacity: 60%;
-    cursor: not-allowed;
-  }
-
-  ${(props) => typeStyles(props.type)}
-  ${(props) => sizeStyles(props.size, props.rounded)}
+const Container = styled.div`
+  height: 100px;
+  width: 100%;
+  background-color: #f6f6f9;
+  margin: auto;
+  padding: 1rem 0;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
-function Button({ icon, children, ...props }) {
-  return (
-    <StyledButton {...props}>
-      {icon}
-      {children}
-    </StyledButton>
-  );
-}
+const StyledButton = styled.button`
+  width: 310px;
+  height: 70px;
+  border-radius: 30px;
+  background-color: var(--orange);
+  border: none;
+  padding: 12px 16px;
+  color: white;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
 
-Button.propTypes = {
-  disabled: PropTypes.bool,
-  type: PropTypes.oneOf(["primary", "secondary"]),
-  size: PropTypes.oneOf(["sm", "md", "lg"]),
-  icon: PropTypes.element,
-  isFullWidth: PropTypes.bool,
-  children: PropTypes.string,
-  onClick: PropTypes.func,
-  rounded: PropTypes.bool,
+const Button = ({ children, onBack }) => {
+  return (
+    <Container>
+      <StyledButton onClick={onBack}>{children}</StyledButton>
+    </Container>
+  );
 };
 
 export default Button;

@@ -37,7 +37,6 @@ html:focus-within {
 
 /* Set core body defaults */
 body {
-  min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
 }
@@ -90,6 +89,11 @@ h1 {
 
 body {
   background-color: #f6f6f9;
+}
+
+.contain {
+  position: relative;
+  min-height: 100%;
 }
 /* line-height: 1.5;
   font-weight: 400;

@@ -2,6 +2,7 @@ import React from "react";
 import { tokenKey, BASE_AUTH_URL } from "../config";
 import DishCard from "./dish-card";
 import styled from "@emotion/styled";
+import Button from "../ui/Button/Button";
 
 const DishesContainer = styled.div`
   display: grid;
@@ -23,12 +24,11 @@ const MainPage = () => {
       <Container>
         <DishesContainer>
           {dishes.map((dish, index) => (
-            <DishCard key={index} dish={dish}>
-              {console.log(dish)}
-            </DishCard>
+            <DishCard key={index} dish={dish} />
           ))}
         </DishesContainer>
       </Container>
+      <Button>Create Product</Button>
     </>
   );
 };

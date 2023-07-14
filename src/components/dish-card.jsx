@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { RiEditBoxFill, RiDeleteBinFill } from "react-icons/ri";
-
+import { useNavigate } from "react-router-dom";
 const CardContainer = styled.div`
   min-width: 156px;
   min-height: 250px;
@@ -50,16 +50,27 @@ const ImgDish = styled.div`
 `;
 
 const DishCard = ({ dish }) => {
-  console.log(dish);
+  const navigate = useNavigate();
+  function handleClick(id) {
+    navigate(`/dish/${id}`);
+  }
   return (
     <CardContainer>
       <BgCard>
-        <ImgDish props={dish.picture_url} />
+        <ImgDish
+          props={dish.picture_url}
+          onClick={() => handleClick(dish.id)}
+        />
         <h3>{dish.name}</h3>
-        <p>${dish.price}</p>
+        <p>
+          $
+          {Number.isInteger(dish.price / 100)
+            ? `${dish.price / 100}.00`
+            : dish.price / 100}
+        </p>
         <div>
-          <RiEditBoxFill />
-          <RiDeleteBinFill />
+          <RiEditBoxFill size="16px" onClick={() => console.log("edit")} />
+          <RiDeleteBinFill size="16px" onClick={() => console.log("delete")} />
         </div>
       </BgCard>
     </CardContainer>
