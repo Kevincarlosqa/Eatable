@@ -45,7 +45,10 @@ function App() {
         }
       />
       <Route path="/dish/:dish_id" element={<DishDetails />} />
-      <Route path="/edit/:dish_id" element={<EditPage />} />
+      <Route
+        path="/edit/:dish_id"
+        element={<EditPage setProducts={setProducts} />}
+      />
       <Route
         path="/create"
         element={<CreatePage products={products} setProducts={setProducts} />}

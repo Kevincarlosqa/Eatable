@@ -87,7 +87,7 @@ const MainPage = ({ products, setProducts }) => {
   }
   async function handleDelete() {
     console.log("delee");
-    const id = localStorage.getItem("delete");
+    const id = localStorage.getItem("Id");
     await ApiFetch(`/products/${id}`, { method: "DELETE" })
       .then((data) => {
         // const products = JSON.parse(localStorage.getItem("dishes"));

@@ -74,13 +74,16 @@ const DishCard = ({ dish, setDel }) => {
         <div>
           <RiEditBoxFill
             size="16px"
-            onClick={() => navigate(`/edit/${dish.id}`)}
+            onClick={() => {
+              localStorage.setItem("Id", dish.id);
+              navigate(`/edit/${dish.id}`);
+            }}
           />
           <RiDeleteBinFill
             size="16px"
             onClick={() => {
               setDel(true);
-              localStorage.setItem("delete", dish.id);
+              localStorage.setItem("Id", dish.id);
             }}
           />
         </div>
