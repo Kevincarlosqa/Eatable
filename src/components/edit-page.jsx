@@ -20,6 +20,7 @@ const EditPage = ({ setProducts }) => {
   const dish = dishes.filter((filt) => filt.id === +dish_id);
   const navigate = useNavigate();
   const [error, setError] = useState(false);
+  const [int, setInt] = useState(false);
   const [formData, setFormData] = useState({
     name: dish[0].name,
     price: dish[0].price,
@@ -38,7 +39,7 @@ const EditPage = ({ setProducts }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e.target);
+
     const newDish = {
       name: e.target[0].value || null,
       price: +e.target[1].value || null,
@@ -55,18 +56,19 @@ const EditPage = ({ setProducts }) => {
     ) {
       setError(true);
       return console.log("ennar todo");
+    } else {
+      setError(false);
+    }
+    if (Number.isInteger(+e.target[1].value)) {
+      setInt(true);
+      return;
+    } else {
+      setInt(false);
     }
     console.log(newDish);
     const id = localStorage.getItem("Id");
     await ApiFetch(`/products/${id}`, { method: "PATCH", body: newDish })
-      .then((data) => {
-        // const products = JSON.parse(localStorage.getItem("dishes"));
-        // // console.log(products);
-        // const newDishes = products.filter((filt) => filt.id !== id);
-        // console.log(newDishes);
-        // setProducts(newDishes);
-        // localStorage.setItem("dishes", JSON.stringify(newDishes));
-      })
+      .then((data) => {})
       .catch(console.error());
     const data = await ApiFetch(`/products`, { method: "GET" }).then((data) =>
       localStorage.setItem("dishes", JSON.stringify(data))
@@ -109,6 +111,8 @@ const EditPage = ({ setProducts }) => {
           value={formData.pictureURL}
           onChange={handleChange}
         />
+        <p>{error ? "Complete todos los campos" : ""}</p>
+        <p>{int ? "Ingrese un precio con dos decimales 00.00" : ""}</p>
         <Button type="submit">Save</Button>
       </FormEdit>
     </div>

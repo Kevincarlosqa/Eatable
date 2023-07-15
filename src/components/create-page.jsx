@@ -16,12 +16,14 @@ const FormEdit = styled.form`
 
 const CreatePage = ({ setProducts }) => {
   const [error, setError] = useState(false);
+  const [int, setInt] = useState(false);
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
+
     const newDish = {
       name: e.target[0].value || null,
-      price: +e.target[1].value || null,
+      price: +e.target[1].value * 100 || null,
       description: e.target[2].value || null,
       category: e.target[3].value || null,
       picture_url: e.target[4].value || null,
@@ -35,10 +37,21 @@ const CreatePage = ({ setProducts }) => {
     ) {
       setError(true);
       return console.log("ennar todo");
+    } else {
+      setError(false);
     }
+    if (Number.isInteger(+e.target[1].value)) {
+      setInt(true);
+      return;
+    } else {
+      setInt(false);
+    }
+
+    console.log(newDish);
 
     await ApiFetch("/products", { method: "POST", body: newDish })
       .then((data) => {
+        setInt(false);
         setError(false);
       })
       .catch(console.error());
@@ -59,7 +72,8 @@ const CreatePage = ({ setProducts }) => {
         <Input label="Description" name="description" type="textarea" />
         <Input label="Category" name="category" />
         <Input label="Picture URL" name="picture_url" />
-        <p>{error ? "Llenar todos los espacios" : ""}</p>
+        <p>{error ? "Complete todos los campos" : ""}</p>
+        <p>{int ? "Ingrese un precio con dos decimales 00.00" : ""}</p>
         <Button>Create</Button>
       </FormEdit>
     </div>
