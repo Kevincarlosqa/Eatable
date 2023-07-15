@@ -80,7 +80,6 @@ const DeleteCard = styled.div`
 
 const MainPage = ({ products, setProducts }) => {
   const dishes = products;
-  console.log(dishes);
   const [del, setDel] = useState(false);
   const navigate = useNavigate();
   function handleCreate() {

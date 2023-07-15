@@ -33,7 +33,6 @@ const CreatePage = ({ setProducts }) => {
       newDish.description == undefined ||
       newDish.picture_url == undefined
     ) {
-      console.log(newDish);
       setError(true);
       return console.log("ennar todo");
     }
@@ -44,7 +43,9 @@ const CreatePage = ({ setProducts }) => {
       })
       .catch(console.error());
 
-    const data = await ApiFetch(`/products`, { method: "GET" });
+    const data = await ApiFetch(`/products`, { method: "GET" }).then((data) =>
+      localStorage.setItem("dishes", JSON.stringify(data))
+    );
     setProducts(data);
     navigate("/");
   }

@@ -38,13 +38,10 @@ const EditPage = () => {
     event.preventDefault();
     // Aquí puedes hacer algo con los valores del formulario
   };
-  function handleBack() {
-    navigate("/");
-  }
   return (
     <div>
       <h1>Edit Product</h1>
-      <FormEdit>
+      <FormEdit onSubmit={() => console.log("submit change")}>
         <Input
           label="Name"
           name="name"
@@ -76,8 +73,8 @@ const EditPage = () => {
           value={formData.pictureURL}
           onChange={handleChange}
         />
+        <Button>Save</Button>
       </FormEdit>
-      <Button>Save</Button>
     </div>
   );
 };

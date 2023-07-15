@@ -22,8 +22,7 @@ function App() {
         await login(credentials);
         const data = await ApiFetch("/products", { method: "GET" });
         setProducts(data);
-        console.log("init product");
-        // localStorage.setItem("dishes", JSON.stringify(data));
+        localStorage.setItem("dishes", JSON.stringify(data));
       } catch (error) {
         console.log(error);
       }
@@ -33,7 +32,7 @@ function App() {
       fetchData();
     }
   }, [products]);
-  console.log(products, "prod");
+
   return (
     <Routes>
       {/* <h1>Products Dashhboard</h1> */}
