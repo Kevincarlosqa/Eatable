@@ -12,6 +12,11 @@ const FormEdit = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  & p {
+    margin: auto;
+    color: red;
+    font-weight: 600;
+  }
 `;
 
 const CreatePage = ({ setProducts }) => {
@@ -20,7 +25,12 @@ const CreatePage = ({ setProducts }) => {
   const navigate = useNavigate();
   async function handleSubmit(e) {
     e.preventDefault();
+    function validateNumberFormat(number) {
+      const regex = /^\d+\.\d{2}$/;
+      return regex.test(number);
+    }
 
+    const priceValue = e.target[1].value;
     const newDish = {
       name: e.target[0].value || null,
       price: +e.target[1].value * 100 || null,
@@ -40,7 +50,7 @@ const CreatePage = ({ setProducts }) => {
     } else {
       setError(false);
     }
-    if (Number.isInteger(+e.target[1].value)) {
+    if (!validateNumberFormat(priceValue) || parseFloat(priceValue) === 0) {
       setInt(true);
       return;
     } else {

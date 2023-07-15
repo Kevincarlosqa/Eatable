@@ -12,6 +12,11 @@ const FormEdit = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  & p {
+    margin: auto;
+    color: red;
+    font-weight: 600;
+  }
 `;
 
 const EditPage = ({ setProducts }) => {
@@ -23,7 +28,7 @@ const EditPage = ({ setProducts }) => {
   const [int, setInt] = useState(false);
   const [formData, setFormData] = useState({
     name: dish[0].name,
-    price: dish[0].price,
+    price: (dish[0].price / 100).toFixed(2),
     description: dish[0].description,
     category: dish[0].category,
     pictureURL: dish[0].picture_url,
@@ -39,10 +44,16 @@ const EditPage = ({ setProducts }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(+e.target[1].value);
+    function validateNumberFormat(number) {
+      const regex = /^\d+\.\d{2}$/;
+      return regex.test(number);
+    }
 
+    const priceValue = e.target[1].value;
     const newDish = {
       name: e.target[0].value || null,
-      price: +e.target[1].value || null,
+      price: +e.target[1].value * 100 || null,
       description: e.target[2].value || null,
       category: e.target[3].value || null,
       picture_url: e.target[4].value || null,
@@ -59,7 +70,7 @@ const EditPage = ({ setProducts }) => {
     } else {
       setError(false);
     }
-    if (Number.isInteger(+e.target[1].value)) {
+    if (!validateNumberFormat(priceValue) || parseFloat(priceValue) === 0) {
       setInt(true);
       return;
     } else {
