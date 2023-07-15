@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainPage from "./components/main-page";
 import DishDetails from "./components/dish-details";
 import EditPage from "./components/edit-page";
@@ -15,13 +15,25 @@ const credentials = {
 };
 
 function App() {
-  login(credentials)
-    .then(
-      ApiFetch("/products", { method: "GET" }).then((data) =>
-        localStorage.setItem("dishes", JSON.stringify(data))
-      )
-    )
-    .catch((error) => console.log(error));
+  const [products, setProducts] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await login(credentials);
+        const data = await ApiFetch("/products", { method: "GET" });
+        setProducts(data);
+        console.log("init product");
+        // localStorage.setItem("dishes", JSON.stringify(data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (!products) {
+      fetchData();
+    }
+  }, [products]);
+  console.log(products, "prod");
   return (
     <Routes>
       {/* <h1>Products Dashhboard</h1> */}
@@ -29,13 +41,16 @@ function App() {
         path="/"
         element={
           <div className="contain">
-            <MainPage />
+            <MainPage products={products} setProducts={setProducts} />
           </div>
         }
       />
       <Route path="/dish/:dish_id" element={<DishDetails />} />
       <Route path="/edit/:dish_id" element={<EditPage />} />
-      <Route path="/create" element={<CreatePage />} />
+      <Route
+        path="/create"
+        element={<CreatePage products={products} setProducts={setProducts} />}
+      />
     </Routes>
   );
 }

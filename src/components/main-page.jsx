@@ -4,12 +4,15 @@ import DishCard from "./dish-card";
 import styled from "@emotion/styled";
 import Button from "../ui/Button/Button";
 import { useNavigate } from "react-router-dom";
+import { login } from "../services/authService";
+import ApiFetch from "../services/apiFetch";
 
 const DishesContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 332px;
   gap: 20px;
+  margin-bottom: 2rem;
 `;
 
 const Container = styled.div`
@@ -74,16 +77,32 @@ const DeleteCard = styled.div`
     background-color: #efb60e;
   }
 `;
-const MainPage = () => {
-  const dishes = JSON.parse(localStorage.getItem("dishes")) || [];
+
+const MainPage = ({ products, setProducts }) => {
+  const dishes = products;
+  console.log(dishes);
   const [del, setDel] = useState(false);
   const navigate = useNavigate();
   function handleCreate() {
     navigate("/create");
   }
-  useEffect(() => {
-    console.log(del);
-  }, [del]);
+  async function handleDelete() {
+    console.log("delee");
+    const id = localStorage.getItem("delete");
+    await ApiFetch(`/products/${id}`, { method: "DELETE" })
+      .then((data) => {
+        // const products = JSON.parse(localStorage.getItem("dishes"));
+        // // console.log(products);
+        // const newDishes = products.filter((filt) => filt.id !== id);
+        // console.log(newDishes);
+        // setProducts(newDishes);
+        // localStorage.setItem("dishes", JSON.stringify(newDishes));
+        setDel(false);
+      })
+      .catch(console.error());
+    const data = await ApiFetch(`/products`, { method: "GET" });
+    setProducts(data);
+  }
 
   return (
     <>
@@ -92,7 +111,7 @@ const MainPage = () => {
         <DeleteModal>
           <DeleteCard>
             <h3>Are you sure?</h3>
-            <button>Yes, delete it!</button>
+            <button onClick={() => handleDelete()}>Yes, delete it!</button>
             <button onClick={() => setDel(false)}>No, cancel!</button>
           </DeleteCard>
         </DeleteModal>
@@ -101,9 +120,11 @@ const MainPage = () => {
       )}
       <Container>
         <DishesContainer>
-          {dishes.map((dish, index) => (
-            <DishCard key={index} dish={dish} setDel={setDel} />
-          ))}
+          {dishes
+            ? dishes.map((dish, index) => (
+                <DishCard key={index} dish={dish} setDel={setDel} />
+              ))
+            : ""}
         </DishesContainer>
       </Container>
       <Button onCreate={handleCreate}>Create Product</Button>

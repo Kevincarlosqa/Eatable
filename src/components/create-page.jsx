@@ -3,6 +3,7 @@ import Button from "../ui/Button/Button";
 import styled from "@emotion/styled";
 import ApiFetch from "../services/apiFetch";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FormEdit = styled.form`
   padding-top: 2rem;
@@ -13,16 +14,17 @@ const FormEdit = styled.form`
   gap: 1rem;
 `;
 
-const CreatePage = () => {
+const CreatePage = ({ setProducts }) => {
   const [error, setError] = useState(false);
-  function handleSubmit(e) {
+  const navigate = useNavigate();
+  async function handleSubmit(e) {
     e.preventDefault();
     const newDish = {
-      name: e.target[0].value,
-      price: +e.target[1].value,
-      description: e.target[2].value,
+      name: e.target[0].value || null,
+      price: +e.target[1].value || null,
+      description: e.target[2].value || null,
       category: e.target[3].value || null,
-      picture_url: e.target[4].value,
+      picture_url: e.target[4].value || null,
     };
     if (
       newDish.name == undefined ||
@@ -35,16 +37,16 @@ const CreatePage = () => {
       setError(true);
       return console.log("ennar todo");
     }
-    // e.target.map((inp) => {
-    //   console.log(inp.value);
-    //   console.log(inp.name);
-    // });
-    setError(false);
-    ApiFetch("/products", { method: "POST", body: newDish })
-      .then(console.log)
-      .catch((error) => console.log(error));
-    console.log(newDish);
-    // const {} = e.target
+
+    await ApiFetch("/products", { method: "POST", body: newDish })
+      .then((data) => {
+        setError(false);
+      })
+      .catch(console.error());
+
+    const data = await ApiFetch(`/products`, { method: "GET" });
+    setProducts(data);
+    navigate("/");
   }
 
   return (

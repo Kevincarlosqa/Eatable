@@ -16,6 +16,9 @@ const BgCard = styled.div`
   text-align: center;
   position: relative;
   & h3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     padding-top: 106px;
     font-size: 22px;
     font-weight: 600;
